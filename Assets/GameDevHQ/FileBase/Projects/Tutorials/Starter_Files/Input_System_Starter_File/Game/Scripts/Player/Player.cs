@@ -48,11 +48,6 @@ namespace Game.Scripts.Player
                 Debug.Log("Failed to connect the Animator");
         }
 
-        public void Move(Vector2 direction)
-        {
-            transform.Translate(new Vector3(direction.x,0,direction.y) * Time.deltaTime * _speed);
-        }
-        
         public void CalcutateMovement(Vector2 moveDirection)
         {
             _playerGrounded = _controller.isGrounded;
