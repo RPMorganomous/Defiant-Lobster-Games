@@ -48,28 +48,26 @@ namespace Game.Scripts.Player
                 Debug.Log("Failed to connect the Animator");
         }
 
-        private void Update()
+        public void Move(Vector2 direction)
         {
-            if (_canMove == true)
-                CalcutateMovement();
-
+            transform.Translate(new Vector3(direction.x,0,direction.y) * Time.deltaTime * _speed);
         }
-
-        private void CalcutateMovement()
+        
+        public void CalcutateMovement(Vector2 moveDirection)
         {
             _playerGrounded = _controller.isGrounded;
-            float h = Input.GetAxisRaw("Horizontal");
-            float v = Input.GetAxisRaw("Vertical");
-
+            float h = moveDirection.x;
+            float v = moveDirection.y;
+        
             transform.Rotate(transform.up, h);
-
+        
             var direction = transform.forward * v;
             var velocity = direction * _speed;
-
-
+        
+        
             _anim.SetFloat("Speed", Mathf.Abs(velocity.magnitude));
-
-
+        
+        
             if (_playerGrounded)
                 velocity.y = 0f;
             if (!_playerGrounded)
@@ -78,7 +76,7 @@ namespace Game.Scripts.Player
             }
             
             _controller.Move(velocity * Time.deltaTime);                      
-
+        
         }
 
         private void InteractableZone_onZoneInteractionComplete(InteractableZone zone)
