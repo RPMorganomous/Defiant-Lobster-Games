@@ -58,11 +58,9 @@ namespace Game.Scripts.Player
         
             var direction = transform.forward * v;
             var velocity = direction * _speed;
-        
-        
+            
             _anim.SetFloat("Speed", Mathf.Abs(velocity.magnitude));
-        
-        
+            
             if (_playerGrounded)
                 velocity.y = 0f;
             if (!_playerGrounded)

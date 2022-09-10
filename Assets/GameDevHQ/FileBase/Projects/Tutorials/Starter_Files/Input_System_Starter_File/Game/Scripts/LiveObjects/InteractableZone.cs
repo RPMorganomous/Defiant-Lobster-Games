@@ -44,8 +44,10 @@ namespace Game.Scripts.LiveObjects
         private KeyState _keyState;
         [SerializeField]
         private GameObject _marker;
+        
+        public static bool _actionButtonPressed = false;
 
-        private bool _inHoldState = false;
+        public static bool _inHoldState = false;
 
         private static int _currentZoneID = 0;
         public static int CurrentZoneID
@@ -120,12 +122,17 @@ namespace Game.Scripts.LiveObjects
             }
         }
 
+        public void Actions()
+        {
+            
+        }
+        
         private void Update()
         {
             if (_inZone == true)
             {
 
-                if (Input.GetKeyDown(_zoneKeyInput) && _keyState != KeyState.PressHold)
+                if (_actionButtonPressed && _keyState != KeyState.PressHold)
                 {
                     //press
                     switch (_zoneType)
@@ -149,9 +156,9 @@ namespace Game.Scripts.LiveObjects
                             break;
                     }
                 }
-                else if (Input.GetKey(_zoneKeyInput) && _keyState == KeyState.PressHold && _inHoldState == false)
+                else if (_actionButtonPressed && _inHoldState == true)
                 {
-                    _inHoldState = true;
+                    //_inHoldState = true;
 
                    
 
@@ -163,7 +170,7 @@ namespace Game.Scripts.LiveObjects
                     }
                 }
 
-                if (Input.GetKeyUp(_zoneKeyInput) && _keyState == KeyState.PressHold)
+                if (!_actionButtonPressed && _keyState == KeyState.PressHold)
                 {
                     _inHoldState = false;
                     onHoldEnded?.Invoke(_zoneID);

@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Actions",
+                    "type": "Value",
+                    "id": "8f4e46a7-9aa9-4bc4-9ad8-7d18b0ba9301",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -70,6 +79,17 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "285a6d3f-fb78-433b-96b9-782adf3e5db4",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Actions",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
