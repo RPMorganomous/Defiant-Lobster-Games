@@ -114,6 +114,162 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Drone"",
+            ""id"": ""d087350d-8b25-4e18-80a2-41df341418db"",
+            ""actions"": [
+                {
+                    ""name"": ""DroneTilt"",
+                    ""type"": ""Value"",
+                    ""id"": ""882a1c70-080f-45f7-806f-07539371381e"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""DroneThrust"",
+                    ""type"": ""Value"",
+                    ""id"": ""39223cb4-d2ad-44c6-bc59-217e645b6a04"",
+                    ""expectedControlType"": ""Key"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""DroneRotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""d0cad042-cb07-41fc-b7dc-c879ff2a99b1"",
+                    ""expectedControlType"": ""Key"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""b191ae90-15cd-49a4-a179-aa0cffbcfa4c"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DroneTilt"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""d6cc35b3-b40f-4175-b83f-7b5964b3c48d"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DroneTilt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""07b01cfa-7aa4-41f2-8a3a-d28902346838"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DroneTilt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""5a6a6acb-6bca-4c64-9c69-5a54f2c902fd"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DroneTilt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""6bda2411-dc8c-46d0-beca-78fb0fd3552d"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DroneTilt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""5e4defe1-deef-49ae-9a7b-d5209c4460ac"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DroneThrust"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""01c01083-c637-44ea-85d8-3f4129d94428"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DroneThrust"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""8ee5403f-bf06-428c-a671-8a5a76bbee49"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DroneThrust"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""478f39db-88c1-4d5d-9e05-840eb7ba9961"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DroneRotate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""48d31f66-98d9-4d93-b6d3-093365342e51"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DroneRotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""c709d03b-2963-47e2-868c-d4b4bcd4b3ad"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DroneRotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -122,6 +278,11 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Actions = m_Player.FindAction("Actions", throwIfNotFound: true);
+        // Drone
+        m_Drone = asset.FindActionMap("Drone", throwIfNotFound: true);
+        m_Drone_DroneTilt = m_Drone.FindAction("DroneTilt", throwIfNotFound: true);
+        m_Drone_DroneThrust = m_Drone.FindAction("DroneThrust", throwIfNotFound: true);
+        m_Drone_DroneRotate = m_Drone.FindAction("DroneRotate", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -218,9 +379,64 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Drone
+    private readonly InputActionMap m_Drone;
+    private IDroneActions m_DroneActionsCallbackInterface;
+    private readonly InputAction m_Drone_DroneTilt;
+    private readonly InputAction m_Drone_DroneThrust;
+    private readonly InputAction m_Drone_DroneRotate;
+    public struct DroneActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public DroneActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @DroneTilt => m_Wrapper.m_Drone_DroneTilt;
+        public InputAction @DroneThrust => m_Wrapper.m_Drone_DroneThrust;
+        public InputAction @DroneRotate => m_Wrapper.m_Drone_DroneRotate;
+        public InputActionMap Get() { return m_Wrapper.m_Drone; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DroneActions set) { return set.Get(); }
+        public void SetCallbacks(IDroneActions instance)
+        {
+            if (m_Wrapper.m_DroneActionsCallbackInterface != null)
+            {
+                @DroneTilt.started -= m_Wrapper.m_DroneActionsCallbackInterface.OnDroneTilt;
+                @DroneTilt.performed -= m_Wrapper.m_DroneActionsCallbackInterface.OnDroneTilt;
+                @DroneTilt.canceled -= m_Wrapper.m_DroneActionsCallbackInterface.OnDroneTilt;
+                @DroneThrust.started -= m_Wrapper.m_DroneActionsCallbackInterface.OnDroneThrust;
+                @DroneThrust.performed -= m_Wrapper.m_DroneActionsCallbackInterface.OnDroneThrust;
+                @DroneThrust.canceled -= m_Wrapper.m_DroneActionsCallbackInterface.OnDroneThrust;
+                @DroneRotate.started -= m_Wrapper.m_DroneActionsCallbackInterface.OnDroneRotate;
+                @DroneRotate.performed -= m_Wrapper.m_DroneActionsCallbackInterface.OnDroneRotate;
+                @DroneRotate.canceled -= m_Wrapper.m_DroneActionsCallbackInterface.OnDroneRotate;
+            }
+            m_Wrapper.m_DroneActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @DroneTilt.started += instance.OnDroneTilt;
+                @DroneTilt.performed += instance.OnDroneTilt;
+                @DroneTilt.canceled += instance.OnDroneTilt;
+                @DroneThrust.started += instance.OnDroneThrust;
+                @DroneThrust.performed += instance.OnDroneThrust;
+                @DroneThrust.canceled += instance.OnDroneThrust;
+                @DroneRotate.started += instance.OnDroneRotate;
+                @DroneRotate.performed += instance.OnDroneRotate;
+                @DroneRotate.canceled += instance.OnDroneRotate;
+            }
+        }
+    }
+    public DroneActions @Drone => new DroneActions(this);
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnActions(InputAction.CallbackContext context);
+    }
+    public interface IDroneActions
+    {
+        void OnDroneTilt(InputAction.CallbackContext context);
+        void OnDroneThrust(InputAction.CallbackContext context);
+        void OnDroneRotate(InputAction.CallbackContext context);
     }
 }

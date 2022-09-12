@@ -10,7 +10,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private Player _player;
     
     // 1. get a reference and start an instance of our input actions
-    private PlayerInputActions _inputActions;
+    private static PlayerInputActions _inputActions;
     
     // Start is called before the first frame update
     void Start()
@@ -50,6 +50,16 @@ public class PlayerManager : MonoBehaviour
     private void InitializeInputs()
     {
         _inputActions = new PlayerInputActions();
+        _inputActions.Player.Enable();
+    }
+    
+    public static void OnDisable()
+    {
+        _inputActions.Player.Disable();
+    }
+    
+    public static void OnEnable()
+    {
         _inputActions.Player.Enable();
     }
     

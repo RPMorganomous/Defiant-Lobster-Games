@@ -9,6 +9,21 @@ namespace Game.Scripts.LiveObjects
 {
     public class Drone : MonoBehaviour
     {
+        //1. get a reference and start an instance of our Drone input actions
+        private PlayerInputActions _inputActions;
+
+        private void Start()
+        {
+            //2. enable input action map (Drone)
+            InitializeInputs();
+        }
+
+        private void InitializeInputs()
+        {
+            _inputActions = new PlayerInputActions();
+            
+        }
+
         private enum Tilt
         {
             NoTilt, Forward, Back, Left, Right
@@ -45,6 +60,8 @@ namespace Game.Scripts.LiveObjects
                 OnEnterFlightMode?.Invoke();
                 UIManager.Instance.DroneView(true);
                 _interactableZone.CompleteTask(4);
+                _inputActions.Drone.Enable();
+                PlayerManager.OnDisable();
             }
         }
 
@@ -52,21 +69,27 @@ namespace Game.Scripts.LiveObjects
         {            
             _droneCam.Priority = 9;
             _inFlightMode = false;
-            UIManager.Instance.DroneView(false);            
+            UIManager.Instance.DroneView(false);
+            _inputActions.Drone.Disable();
+            PlayerManager.OnEnable();
+            
         }
 
         private void Update()
         {
             if (_inFlightMode)
             {
-                CalculateTilt();
-                CalculateMovementUpdate();
+                var tilt = _inputActions.Drone.DroneTilt.ReadValue<Vector2>();
+                CalculateTilt(tilt);
+                var rotate = _inputActions.Drone.DroneRotate.ReadValue<float>();
+                CalculateMovementUpdate(rotate);
 
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     _inFlightMode = false;
                     onExitFlightmode?.Invoke();
-                    ExitFlightMode();
+                    ExitFlightMode(); 
+                    //_inputActions.Drone.Disable();
                 }
             }
         }
@@ -74,19 +97,20 @@ namespace Game.Scripts.LiveObjects
         private void FixedUpdate()
         {
             _rigidbody.AddForce(transform.up * (9.81f), ForceMode.Acceleration);
+            var thrust = _inputActions.Drone.DroneThrust.ReadValue<float>();
             if (_inFlightMode)
-                CalculateMovementFixedUpdate();
+                CalculateMovementFixedUpdate(thrust);
         }
 
-        private void CalculateMovementUpdate()
+        private void CalculateMovementUpdate(float rotate)
         {
-            if (Input.GetKey(KeyCode.LeftArrow))
+            if (rotate < 0) // left arrow key pressed
             {
                 var tempRot = transform.localRotation.eulerAngles;
                 tempRot.y -= _speed / 3;
                 transform.localRotation = Quaternion.Euler(tempRot);
             }
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (rotate > 0 ) // right arrow key pressed
             {
                 var tempRot = transform.localRotation.eulerAngles;
                 tempRot.y += _speed / 3;
@@ -94,28 +118,33 @@ namespace Game.Scripts.LiveObjects
             }
         }
 
-        private void CalculateMovementFixedUpdate()
+        private void CalculateMovementFixedUpdate(float thrust)
         {
             
-            if (Input.GetKey(KeyCode.Space))
+            if (thrust > 0) // space pressed
             {
                 _rigidbody.AddForce(transform.up * _speed, ForceMode.Acceleration);
             }
-            if (Input.GetKey(KeyCode.V))
+            if (thrust < 0) // V pressed
             {
                 _rigidbody.AddForce(-transform.up * _speed, ForceMode.Acceleration);
             }
         }
 
-        private void CalculateTilt()
+        public void CalculateTilt( Vector2 tilt)
         {
-            if (Input.GetKey(KeyCode.A)) 
+            // debug log vaues from inputactions
+            Debug.Log("Tilt X: " + tilt.x);
+            Debug.Log("Tilt Y: " + tilt.y);
+            
+            // check vector value for range and apply tilt
+            if (tilt.x < 0) // A key pressed
                 transform.rotation = Quaternion.Euler(00, transform.localRotation.eulerAngles.y, 30);
-            else if (Input.GetKey(KeyCode.D))
+            else if (tilt.x > 0) // D key pressed
                 transform.rotation = Quaternion.Euler(0, transform.localRotation.eulerAngles.y, -30);
-            else if (Input.GetKey(KeyCode.W))
+            else if (tilt.y > 0) // W key pressed
                 transform.rotation = Quaternion.Euler(30, transform.localRotation.eulerAngles.y, 0);
-            else if (Input.GetKey(KeyCode.S))
+            else if (tilt.y < 0) // S key pressed
                 transform.rotation = Quaternion.Euler(-30, transform.localRotation.eulerAngles.y, 0);
             else 
                 transform.rotation = Quaternion.Euler(0, transform.localRotation.eulerAngles.y, 0);
