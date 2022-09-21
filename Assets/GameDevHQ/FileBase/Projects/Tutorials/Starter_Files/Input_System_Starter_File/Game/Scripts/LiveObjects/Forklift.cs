@@ -22,6 +22,15 @@ namespace Game.Scripts.LiveObjects
 
         public static event Action onDriveModeEntered;
         public static event Action onDriveModeExited;
+        
+        //1. get a reference and start an instance of our Forklift input actions
+        private PlayerInputActions _inputActions;
+
+        private void Start()
+        {
+            //2. enable input action map (Forklift)
+            _inputActions = new PlayerInputActions();
+        }
 
         private void OnEnable()
         {
@@ -37,6 +46,10 @@ namespace Game.Scripts.LiveObjects
                 onDriveModeEntered?.Invoke();
                 _driverModel.SetActive(true);
                 _interactableZone.CompleteTask(5);
+                //2. enable input action map (Forklift)
+                _inputActions.Forklift.Enable();
+                //3. register perform functions
+                //_inputActions.Forklift.Move.performed += Move_performed;
             }
         }
 
@@ -46,25 +59,27 @@ namespace Game.Scripts.LiveObjects
             _forkliftCam.Priority = 9;            
             _driverModel.SetActive(false);
             onDriveModeExited?.Invoke();
-            
+            _inputActions.Forklift.Disable();
         }
 
         private void Update()
         {
             if (_inDriveMode == true)
             {
-                LiftControls();
-                CalcutateMovement();
+                var lift = _inputActions.Forklift.Controls.ReadValue<float>();
+                LiftControls(lift);
+                var move = _inputActions.Forklift.Move.ReadValue<Vector2>();
+                CalcutateMovement(move);
                 if (Input.GetKeyDown(KeyCode.Escape))
                     ExitDriveMode();
             }
 
         }
 
-        private void CalcutateMovement()
+        private void CalcutateMovement(Vector2 move)
         {
-            float h = Input.GetAxisRaw("Horizontal");
-            float v = Input.GetAxisRaw("Vertical");
+            float h = move.x;
+            float v = move.y;
             var direction = new Vector3(0, 0, v);
             var velocity = direction * _speed;
 
@@ -78,11 +93,11 @@ namespace Game.Scripts.LiveObjects
             }
         }
 
-        private void LiftControls()
+        private void LiftControls(float lift)
         {
-            if (Input.GetKey(KeyCode.R))
+            if (lift > 0)
                 LiftUpRoutine();
-            else if (Input.GetKey(KeyCode.T))
+            else if (lift < 0)
                 LiftDownRoutine();
         }
 

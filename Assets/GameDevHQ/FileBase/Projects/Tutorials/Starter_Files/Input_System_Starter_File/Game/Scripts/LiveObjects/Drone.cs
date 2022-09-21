@@ -21,7 +21,6 @@ namespace Game.Scripts.LiveObjects
         private void InitializeInputs()
         {
             _inputActions = new PlayerInputActions();
-            
         }
 
         private enum Tilt
@@ -60,6 +59,7 @@ namespace Game.Scripts.LiveObjects
                 OnEnterFlightMode?.Invoke();
                 UIManager.Instance.DroneView(true);
                 _interactableZone.CompleteTask(4);
+                // 3. get the input action map (Drone)
                 _inputActions.Drone.Enable();
                 PlayerManager.OnDisable();
             }
@@ -70,6 +70,7 @@ namespace Game.Scripts.LiveObjects
             _droneCam.Priority = 9;
             _inFlightMode = false;
             UIManager.Instance.DroneView(false);
+            // 3. get the input action map (Drone)
             _inputActions.Drone.Disable();
             PlayerManager.OnEnable();
             
