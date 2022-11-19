@@ -27,6 +27,7 @@ public class PlayerManager : MonoBehaviour
     private void Action_started(InputAction.CallbackContext obj)
     {
         InteractableZone._actionButtonPressed = true;
+        InteractableZone._inHoldState = true;
     }
 
     private void Action_canceled(InputAction.CallbackContext obj)
@@ -41,11 +42,11 @@ public class PlayerManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        var move = _inputActions.Player.Movement.ReadValue<Vector2>();
-        _player.CalcutateMovement(move);
-    }
+    // void Update()
+    // {
+    //     var move = _inputActions.Player.Movement.ReadValue<Vector2>();
+    //     _player.CalcutateMovement(move);
+    // }
 
     private void InitializeInputs()
     {

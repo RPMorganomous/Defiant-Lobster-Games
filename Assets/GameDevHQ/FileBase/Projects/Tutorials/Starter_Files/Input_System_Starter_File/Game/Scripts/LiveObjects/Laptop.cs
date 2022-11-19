@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
+using UnityEngine.InputSystem;
 
 namespace Game.Scripts.LiveObjects
 {
@@ -20,6 +21,8 @@ namespace Game.Scripts.LiveObjects
         [SerializeField]
         private InteractableZone _interactableZone;
 
+        //create a reference to input actions
+        private PlayerInputActions _inputActions;
         public static event Action onHackComplete;
         public static event Action onHackEnded;
 
@@ -27,6 +30,23 @@ namespace Game.Scripts.LiveObjects
         {
             InteractableZone.onHoldStarted += InteractableZone_onHoldStarted;
             InteractableZone.onHoldEnded += InteractableZone_onHoldEnded;
+            // create an instace of input actions
+            _inputActions = new PlayerInputActions();
+            _inputActions.Enable();
+            // subscribe to the action
+            _inputActions.Player.Actions.started += Actions_started;
+            _inputActions.Player.Actions.performed += Actions_performed;
+
+        }
+
+        private void Actions_started(InputAction.CallbackContext obj)
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void Actions_performed(InputAction.CallbackContext obj)
+        {
+            //throw new NotImplementedException();
         }
 
         private void Update()

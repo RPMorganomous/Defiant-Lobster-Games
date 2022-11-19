@@ -46,6 +46,8 @@ namespace Game.Scripts.LiveObjects
                 onDriveModeEntered?.Invoke();
                 _driverModel.SetActive(true);
                 _interactableZone.CompleteTask(5);
+                //PlayerManager.OnDisable();
+                _inputActions.Player.Disable();
                 //2. enable input action map (Forklift)
                 _inputActions.Forklift.Enable();
                 //3. register perform functions
@@ -60,6 +62,7 @@ namespace Game.Scripts.LiveObjects
             _driverModel.SetActive(false);
             onDriveModeExited?.Invoke();
             _inputActions.Forklift.Disable();
+            _inputActions.Player.Enable();
         }
 
         private void Update()

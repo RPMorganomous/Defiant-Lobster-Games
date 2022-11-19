@@ -22,6 +22,7 @@ namespace Game.Scripts.Player
         [SerializeField]
         private GameObject _model;
 
+        private PlayerInputActions _inputActions;
 
         private void OnEnable()
         {
@@ -33,6 +34,8 @@ namespace Game.Scripts.Player
             Forklift.onDriveModeEntered += HidePlayer;
             Drone.OnEnterFlightMode += ReleasePlayerControl;
             Drone.onExitFlightmode += ReturnPlayerControl;
+            _inputActions = new PlayerInputActions();
+            _inputActions.Enable();
         } 
 
         private void Start()
@@ -47,7 +50,15 @@ namespace Game.Scripts.Player
             if (_anim == null)
                 Debug.Log("Failed to connect the Animator");
         }
-
+        void Update()
+        {
+            var move = _inputActions.Player.Movement.ReadValue<Vector2>();
+            if (_canMove == true)
+            {
+                CalcutateMovement(move);
+            }
+            
+        }
         public void CalcutateMovement(Vector2 moveDirection)
         {
             _playerGrounded = _controller.isGrounded;

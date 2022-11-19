@@ -76,6 +76,7 @@ namespace Game.Scripts.LiveObjects
 
         private void OnTriggerEnter(Collider other)
         {
+            Debug.Log("Entered Zone" + _currentZoneID);
             if (other.CompareTag("Player") && _currentZoneID > _requiredID)
             {
                 switch (_zoneType)
@@ -120,7 +121,16 @@ namespace Game.Scripts.LiveObjects
                         break;
                 }
             }
+            //if zone 6 then turn on slider
+            if (other.CompareTag("Player") && _currentZoneID > 41)
+                
+            {
+                GameObject.Find("Breakable_Wooden_Crate").GetComponent<Crate>().TurnOnSlider();
+                Debug.Log("Turn on slider");
+            }
         }
+        
+        
 
         public void Actions()
         {

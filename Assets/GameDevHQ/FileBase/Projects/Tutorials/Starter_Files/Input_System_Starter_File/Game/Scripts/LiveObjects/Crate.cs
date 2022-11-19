@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 namespace Game.Scripts.LiveObjects
 {
@@ -11,10 +14,80 @@ namespace Game.Scripts.LiveObjects
         [SerializeField] private Rigidbody[] _pieces;
         [SerializeField] private BoxCollider _crateCollider;
         [SerializeField] private InteractableZone _interactableZone;
+        [SerializeField] private Slider _punchSlider;
+        private float _punchSliderValue;
         private bool _isReadyToBreak = false;
+        private bool _chargingPunch = false;
 
         private List<Rigidbody> _brakeOff = new List<Rigidbody>();
+        
+        // 1. create a reference to our input actions
+        private PlayerInputActions _inputActions;
+        
+        int _piecesCount;
+        private void Awake()
+        {
+            _punchSlider.gameObject.SetActive(false);
+            // 2. create a new instance of our input actions
+            _inputActions = new PlayerInputActions();
+            _inputActions.Enable();
+            // 3. subscribe to the action we want to use
+            _inputActions.Player.Actions.started += Charging_started;
+            _inputActions.Player.Actions.canceled += Charging_canceled; 
+            _inputActions.Player.Actions.performed += Charging_completed;
+        }
+        
+        private void Charging_canceled(InputAction.CallbackContext obj)
+        {
+            _chargingPunch = false;
+            _punchSlider.value = 0;
+        }
+        
+        private void Charging_completed(InputAction.CallbackContext obj)
+        {
+            Debug.Log("CHARGED");
+            _punchSlider.gameObject.SetActive(false);
+            _chargingPunch = false;
+            _isReadyToBreak = true;
+            _piecesCount = _brakeOff.Count;
+            _wholeCrate.SetActive(false);
+            _brokenCrate.SetActive(true);
 
+            for (int i = 0; i < _piecesCount; i++)
+            {
+                Debug.Log("breakoff = " + _brakeOff[i]);
+                _brakeOff[i].isKinematic = false;
+                _brakeOff[i].constraints = RigidbodyConstraints.None;
+                _brakeOff[i].AddExplosionForce(6, transform.position, 10,1,ForceMode.Impulse);
+            }
+        }
+        private void Charging_started(InputAction.CallbackContext obj)
+        {
+            // if (_isReadyToBreak && zone.GetZoneID() == 6)
+            // {
+                _chargingPunch = true;
+                //turn on slider
+                //_punchSlider.gameObject.SetActive(true);
+                StartCoroutine(ChargePunch());
+            //}
+
+            
+        }
+
+        public void TurnOnSlider()
+        {
+            _punchSlider.gameObject.SetActive(true);
+        }
+
+        IEnumerator ChargePunch()
+        {
+            while (_chargingPunch == true & _punchSlider.value <= 1)
+            {
+                _punchSlider.value += Time.deltaTime / 3f;
+                yield return null;
+            }
+        }
+        
         private void OnEnable()
         {
             InteractableZone.onZoneInteractionComplete += InteractableZone_onZoneInteractionComplete;
@@ -29,8 +102,8 @@ namespace Game.Scripts.LiveObjects
                 _brokenCrate.SetActive(true);
                 _isReadyToBreak = true;
             }
-
-            if (_isReadyToBreak && zone.GetZoneID() == 6) //Crate zone            
+            if (_isReadyToBreak && zone.GetZoneID() == 6)
+            //if (_isReadyToBreak) //Crate zone            
             {
                 if (_brakeOff.Count > 0)
                 {
@@ -50,7 +123,7 @@ namespace Game.Scripts.LiveObjects
         private void Start()
         {
             _brakeOff.AddRange(_pieces);
-            
+
         }
 
 
